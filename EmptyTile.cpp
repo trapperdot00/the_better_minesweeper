@@ -11,18 +11,18 @@ auto to_char(int i) -> char {
 }
 
 auto EmptyTile::clicked_rep() const -> char {
-	return (neighboring_mine_count() > 0)
-		? to_char(neighboring_mine_count())
+	return (mine_neighbor_count() > 0)
+		? to_char(mine_neighbor_count())
 		: ' ';
 }
 
 auto EmptyTile::click() -> void {
 	if (!clicked()) {
 		Tile::click();
-		if (neighboring_mine_count() == 0) {
+		if (mine_neighbor_count() == 0) {
 			click_neighbors();
 		}
-	} else if (safely_clickable()) {
+	} else if (all_neighboring_mines_assumed()) {
 		click_neighbors();
 	}
 }
@@ -37,7 +37,7 @@ auto EmptyTile::neighbor_count() const -> int {
 	return result;
 }
 
-auto EmptyTile::neighboring_mine_count() const -> int {
+auto EmptyTile::mine_neighbor_count() const -> int {
 	int result = 0;
 	for_each_neighbor([this, &result](Point p) {
 		if (_data.tiles.get_tile(p)->is_mine()) {
@@ -67,14 +67,14 @@ auto EmptyTile::flagged_neighbor_count() const -> int {
 	return result;
 }
 
-auto EmptyTile::safely_clickable() const -> bool {
-	return neighboring_mine_count() == flagged_neighbor_count();
+auto EmptyTile::all_neighboring_mines_assumed() const -> bool {
+	return mine_neighbor_count() == flagged_neighbor_count();
 }
 
 auto EmptyTile::click_neighbors() -> void {
 	for_each_neighbor([this](Point p) {
 		auto neighbor = _data.tiles.get_tile(p);
-		if (!neighbor->is_mine() && !neighbor->clicked()) {
+		if (!neighbor->clicked()) {
 			_data.tiles.get_tile(p)->click();
 		}
 	});
