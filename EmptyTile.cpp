@@ -11,19 +11,33 @@ auto to_char(int i) -> char {
 }
 
 auto EmptyTile::clicked_rep() const -> char {
-	return (neighbor_count() > 0)
-		? to_char(neighbor_count())
+	return (neighboring_mine_count() > 0)
+		? to_char(neighboring_mine_count())
 		: ' ';
 }
 
 auto EmptyTile::click() -> void {
-	Tile::click();
-	if (neighbor_count() == 0) {
+	if (!clicked()) {
+		Tile::click();
+		if (neighboring_mine_count() == 0) {
+			click_neighbors();
+		}
+	} else if (safely_clickable()) {
 		click_neighbors();
 	}
 }
 
+auto EmptyTile::is_mine() const -> bool {
+	return false;
+}
+
 auto EmptyTile::neighbor_count() const -> int {
+	int result = 0;
+	for_each_neighbor([&result](Point) { ++result; });
+	return result;
+}
+
+auto EmptyTile::neighboring_mine_count() const -> int {
 	int result = 0;
 	for_each_neighbor([this, &result](Point p) {
 		if (_data.tiles.get_tile(p)->is_mine()) {
@@ -33,8 +47,28 @@ auto EmptyTile::neighbor_count() const -> int {
 	return result;
 }
 
-auto EmptyTile::is_mine() const -> bool {
-	return false;
+auto EmptyTile::clicked_neighbor_count() const -> int {
+	int result = 0;
+	for_each_neighbor([this, &result](Point p) {
+		if (_data.tiles.get_tile(p)->clicked()) {
+			++result;
+		}
+	});
+	return result;
+}
+
+auto EmptyTile::flagged_neighbor_count() const -> int {
+	int result = 0;
+	for_each_neighbor([this, &result](Point p) {
+		if (_data.tiles.get_tile(p)->flagged()) {
+			++result;
+		}
+	});
+	return result;
+}
+
+auto EmptyTile::safely_clickable() const -> bool {
+	return neighboring_mine_count() == flagged_neighbor_count();
 }
 
 auto EmptyTile::click_neighbors() -> void {

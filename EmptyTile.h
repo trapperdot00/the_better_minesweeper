@@ -14,6 +14,10 @@ public:
 	auto is_mine() const -> bool override;
 
 	auto neighbor_count() const -> int;
+	auto neighboring_mine_count() const -> int;
+	auto clicked_neighbor_count() const -> int;
+	auto flagged_neighbor_count() const -> int;
+	auto safely_clickable() const -> bool;
 private:
 	auto click_neighbors() -> void;
 

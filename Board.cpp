@@ -16,21 +16,55 @@ Board::Board(int width, int height, int mine_count) :
 	place_empties();
 }
 
-void Board::click(Point p) {
+Board::Board(Difficulty diff) :
+	Board{diff.width, diff.height, diff.mine_count}
+{}
+
+auto Board::click(Point p) -> void {
 	_data.tiles.get_tile(p)->click();
 }
 
-void Board::flag(Point p) {
+auto Board::flag(Point p) -> void {
 	_data.tiles.get_tile(p)->flag();
 }
 
-void Board::print() const {
+auto Board::print() const -> void {
+	print_header();
 	for (int y = 0; y < height(); ++y) {
-		for (int x = 0; x < width(); ++x) {
-			std::cout << _data.tiles.get_tile({x, y})->rep() << ' ';
-		}
-		std::cout << '\n';
+		print_row(y);
 	}
+	print_footer();
+}
+
+auto Board::print_header() const -> void {
+	std::cout << "  | ";
+	for (int i = 0; i < _data.width; ++i) {
+		std::cout << i % 10 << ' ';
+	}
+	std::cout << "|\n";
+	std::cout << std::string(_data.width * 2 + 5, '-') << '\n';
+}
+
+auto Board::print_footer() const -> void {
+	std::cout << std::string(_data.width * 2 + 5, '-') << '\n';
+	std::cout << "  | ";
+	for (int i = 0; i < _data.width; ++i) {
+		std::cout << i % 10 << ' ';
+	}
+	std::cout << "|\n";
+}
+
+auto Board::print_row(int y) const -> void {
+	std::cout << y % 10 << " | ";
+	for (int x = 0; x < width(); ++x) {
+		const Point p{x, y};
+		print_tile(p);
+	}
+	std::cout << "|\n";
+}
+
+auto Board::print_tile(Point p) const -> void {
+	std::cout << _data.tiles.get_tile(p)->rep() << ' ';
 }
 
 void Board::place_mines() {
