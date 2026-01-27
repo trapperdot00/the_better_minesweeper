@@ -17,12 +17,8 @@ auto EmptyTile::clicked_rep() const -> char {
 }
 
 auto EmptyTile::click() -> void {
-	if (!clicked()) {
-		Tile::click();
-		if (mine_neighbor_count() == 0) {
-			click_neighbors();
-		}
-	} else if (all_neighboring_mines_assumed()) {
+	Tile::click();
+	if (should_click_neighbors()) {
 		click_neighbors();
 	}
 }
@@ -71,10 +67,15 @@ auto EmptyTile::all_neighboring_mines_assumed() const -> bool {
 	return mine_neighbor_count() == flagged_neighbor_count();
 }
 
+auto EmptyTile::should_click_neighbors() const -> bool {
+	return (!clicked() && mine_neighbor_count() == 0)
+		|| all_neighboring_mines_assumed();
+}
+
 auto EmptyTile::click_neighbors() -> void {
 	for_each_neighbor([this](Point p) {
 		auto neighbor = _data.tiles.get_tile(p);
-		if (!neighbor->clicked()) {
+		if (neighbor->clickable()) {
 			_data.tiles.get_tile(p)->click();
 		}
 	});
@@ -107,7 +108,9 @@ auto EmptyTile::neighbor_max_y() const -> int {
 auto EmptyTile::for_each_neighbor(std::function<void(Point)> func) const -> void {
 	for (int y = neighbor_min_y(); y <= neighbor_max_y(); ++y) {
 		for (int x = neighbor_min_x(); x <= neighbor_max_x(); ++x) {
-			func(Point{x, y});
+			if (Point{x, y} != _pos) {
+				func(Point{x, y});
+			}
 		}
 	}
 }

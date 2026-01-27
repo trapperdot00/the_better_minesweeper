@@ -18,13 +18,18 @@ auto Tile::rep() const -> char {
 }
 
 auto Tile::click() -> void {
-	if (clicked() || flagged()) return;
-	_clicked = true;
+	if (clickable()) {
+		_clicked = true;
+	}
 }
 
 auto Tile::flag() -> void {
 	if (clicked()) return;
 	_flagged = !_flagged;
+}
+
+auto Tile::clickable() const -> bool {
+	return !clicked() && !flagged();
 }
 
 auto Tile::clicked() const -> bool {

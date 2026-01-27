@@ -19,6 +19,7 @@ public:
 	auto flagged_neighbor_count() const -> int;
 	auto all_neighboring_mines_assumed() const -> bool;
 private:
+	auto should_click_neighbors() const -> bool;
 	auto click_neighbors() -> void;
 
 	auto clamp_x(int x) const -> int;

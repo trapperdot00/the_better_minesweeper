@@ -16,6 +16,7 @@ public:
 	virtual auto click() -> void;
 	virtual auto flag() -> void;
 
+	auto clickable() const -> bool;
 	auto clicked() const -> bool;
 	auto flagged() const -> bool;
 	virtual auto is_mine() const -> bool = 0;
