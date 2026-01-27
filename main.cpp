@@ -13,7 +13,7 @@ void play(Board& b) {
 	char op;
 	int x;
 	int y;
-	while (std::cin >> op >> x >> y) {
+	while (!b.game_ended() && (std::cin >> op >> x >> y)) {
 		const Point p{x, y};
 		switch (op) {
 		case 'c':

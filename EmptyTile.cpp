@@ -76,7 +76,7 @@ auto EmptyTile::click_neighbors() -> void {
 	for_each_neighbor([this](Point p) {
 		auto neighbor = _data.tiles.get_tile(p);
 		if (neighbor->clickable()) {
-			_data.tiles.get_tile(p)->click();
+			neighbor->click();
 		}
 	});
 }
@@ -108,8 +108,9 @@ auto EmptyTile::neighbor_max_y() const -> int {
 auto EmptyTile::for_each_neighbor(std::function<void(Point)> func) const -> void {
 	for (int y = neighbor_min_y(); y <= neighbor_max_y(); ++y) {
 		for (int x = neighbor_min_x(); x <= neighbor_max_x(); ++x) {
-			if (Point{x, y} != _pos) {
-				func(Point{x, y});
+			const Point p{x, y};
+			if (p != _pos) {
+				func(p);
 			}
 		}
 	}

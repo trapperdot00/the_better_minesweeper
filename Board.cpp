@@ -29,11 +29,18 @@ auto Board::flag(Point p) -> void {
 }
 
 auto Board::print() const -> void {
+	print_info();
 	print_header();
-	for (int y = 0; y < height(); ++y) {
-		print_row(y);
-	}
+	print_rows();
 	print_footer();
+}
+
+auto Board::print_info() const -> void {
+	std::cout
+		<< "clicked: " << clicked() << '\n'
+		<< "flagged: " << flagged() << '\n'
+		<< "remaining tiles: " << remaining_tiles() << '\n'
+		<< "remaining mines: " << remaining_mines() << '\n';
 }
 
 auto Board::print_header() const -> void {
@@ -52,6 +59,12 @@ auto Board::print_footer() const -> void {
 		std::cout << i % 10 << ' ';
 	}
 	std::cout << "|\n";
+}
+
+auto Board::print_rows() const -> void {
+	for (int y = 0; y < height(); ++y) {
+		print_row(y);
+	}
 }
 
 auto Board::print_row(int y) const -> void {

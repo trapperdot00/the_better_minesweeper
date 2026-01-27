@@ -20,16 +20,27 @@ auto Tile::rep() const -> char {
 auto Tile::click() -> void {
 	if (clickable()) {
 		_clicked = true;
+		++_data.clicked;
 	}
 }
 
 auto Tile::flag() -> void {
-	if (clicked()) return;
-	_flagged = !_flagged;
+	if (flaggable()) {
+		_flagged = !_flagged;
+		if (_flagged) {
+			++_data.flagged;
+		} else {
+			--_data.flagged;
+		}
+	}
 }
 
 auto Tile::clickable() const -> bool {
 	return !clicked() && !flagged();
+}
+
+auto Tile::flaggable() const -> bool {
+	return !clicked();
 }
 
 auto Tile::clicked() const -> bool {
