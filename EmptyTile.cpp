@@ -11,7 +11,9 @@ auto to_char(int i) -> char {
 }
 
 auto EmptyTile::clicked_rep() const -> char {
-	return (neighbor_count() > 0) ? to_char(neighbor_count()) : ' ';
+	return (neighbor_count() > 0)
+		? to_char(neighbor_count())
+		: ' ';
 }
 
 auto EmptyTile::click() -> void {
