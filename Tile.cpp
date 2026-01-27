@@ -18,7 +18,7 @@ auto Tile::rep() const -> char {
 }
 
 auto Tile::click() -> void {
-	if (clicked()) return;
+	if (clicked() || flagged()) return;
 	_clicked = true;
 }
 
