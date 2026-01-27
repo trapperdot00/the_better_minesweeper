@@ -2,7 +2,7 @@
 #define TILES_H
 
 class Tile;
-class Point;
+struct Point;
 
 #include <vector>
 #include <memory>

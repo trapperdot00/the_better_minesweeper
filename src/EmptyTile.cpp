@@ -7,7 +7,7 @@
 auto to_char(int i) -> char {
 	if (i < 0) return '0';
 	if (i > 9) return '9';
-	return '0' + i;
+	return '0' + static_cast<char>(i);
 }
 
 auto EmptyTile::clicked_rep() const -> char {

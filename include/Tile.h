@@ -1,7 +1,7 @@
 #ifndef TILE_H
 #define TILE_H
 
-class BoardData;
+struct BoardData;
 #include "Point.h"
 
 class Tile {

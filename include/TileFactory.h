@@ -1,8 +1,8 @@
 #ifndef TILEFACTORY_H
 #define TILEFACTORY_H
 
-class Point;
-class BoardData;
+struct Point;
+struct BoardData;
 class Tile;
 
 #include <memory>
