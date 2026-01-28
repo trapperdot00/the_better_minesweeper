@@ -18,13 +18,6 @@ auto Tiles::get_tile(Point p) const -> std::shared_ptr<Tile> {
 	return _data[to_index(p)];
 }
 
-auto Tiles::get_tile(int idx) const -> std::shared_ptr<Tile> {
-	if (!in_range(idx)) {
-		throw std::runtime_error{"index out of range"};
-	}
-	return _data[idx];
-}
-
 auto Tiles::set_tile(Point p, std::shared_ptr<Tile> tile) -> void {
 	if (!in_range(p)) {
 		throw std::runtime_error{"point out of range"};
@@ -32,26 +25,11 @@ auto Tiles::set_tile(Point p, std::shared_ptr<Tile> tile) -> void {
 	_data[to_index(p)] = tile;
 }
 
-auto Tiles::set_tile(int idx, std::shared_ptr<Tile> tile) -> void {
-	if (!in_range(idx)) {
-		throw std::runtime_error{"index out of range"};
-	}
-	_data[idx] = tile;
-}
-
 auto Tiles::in_range(Point p) const -> bool {
 	return (p.x >= 0 && p.x < _width)
 		&& (p.y >= 0 && p.y < _height);
 }
 
-auto Tiles::in_range(int idx) const -> bool {
-	return idx >= 0 && idx < size();
-}
-
 auto Tiles::to_index(Point p) const -> int {
 	return p.y * _width + p.x;
-}
-
-auto Tiles::to_point(int idx) const -> Point {
-	return Point{idx % _width, idx / _width};
 }

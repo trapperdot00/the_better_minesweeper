@@ -84,23 +84,27 @@ void Board::place_mines() {
 	if (mine_count() > size()) {
 		throw std::runtime_error{"more mines than tiles"};
 	}
-	std::mt19937 engine{std::random_device{}()};
-	std::uniform_int_distribution<int> dist(0, size() - 1);
+	std::mt19937 e{std::random_device{}()};
+	std::uniform_int_distribution<int> x_gen(0, width() - 1);
+	std::uniform_int_distribution<int> y_gen(0, height() - 1);
 	for (int remaining = mine_count(); remaining > 0; ) {
-		const int i = dist(engine);
-		if (!_data.tiles.get_tile(i)) {
-			const Point pos = _data.tiles.to_point(i);
-			_data.tiles.set_tile(i, _factory.create_mine(pos));
+		const Point p{x_gen(e), y_gen(e)};
+		if (!_data.tiles.get_tile(p)) {
+			_data.tiles.set_tile(p, _factory.create_mine(p));
 			--remaining;
 		}
 	}
 }
 
 void Board::place_empties() {
-	for (int i = 0; i < size(); ++i) {
-		if (!_data.tiles.get_tile(i)) {
-			const Point pos = _data.tiles.to_point(i);
-			_data.tiles.set_tile(i, _factory.create_empty(pos));
+	for (int y = 0; y < height(); ++y) {
+		for (int x = 0; x < width(); ++x) {
+			const Point p{x, y};
+			if (!_data.tiles.get_tile(p)) {
+				_data.tiles.set_tile(
+					p, _factory.create_empty(p)
+				);
+			}
 		}
 	}
 }
