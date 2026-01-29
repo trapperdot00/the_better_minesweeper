@@ -1,8 +1,8 @@
 #include "Tile.h"
 
-#include "BoardData.h"
+#include "GameContext.h"
 
-Tile::Tile(BoardData& data, Point pos) :
+Tile::Tile(GameContext& data, Point pos) :
 	_data{data},
 	_pos{pos}
 {}
@@ -20,7 +20,7 @@ auto Tile::rep() const -> char {
 auto Tile::click() -> void {
 	if (clickable()) {
 		_clicked = true;
-		++_data.clicked;
+		_data.increment_clicked_count();
 	}
 }
 
@@ -28,9 +28,9 @@ auto Tile::flag() -> void {
 	if (flaggable()) {
 		_flagged = !_flagged;
 		if (_flagged) {
-			++_data.flagged;
+			_data.increment_flagged_count();
 		} else {
-			--_data.flagged;
+			_data.decrement_flagged_count();
 		}
 	}
 }

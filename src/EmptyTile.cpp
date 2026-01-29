@@ -1,6 +1,6 @@
 #include "EmptyTile.h"
 
-#include "BoardData.h"
+#include "GameContext.h"
 
 auto to_char(int i) -> char {
 	if (i < 0) return '0';
@@ -27,14 +27,14 @@ auto EmptyTile::is_mine() const -> bool {
 
 auto EmptyTile::neighbor_count() const -> int {
 	int result = 0;
-	_data.tiles.for_each_neighbor(pos(), [&result](Point) { ++result; });
+	_data.for_each_neighbor(pos(), [&result](Point) { ++result; });
 	return result;
 }
 
 auto EmptyTile::mine_neighbor_count() const -> int {
 	int result = 0;
-	_data.tiles.for_each_neighbor(pos(), [this, &result](Point p) {
-		if (_data.tiles.get_tile(p)->is_mine()) {
+	_data.for_each_neighbor(pos(), [this, &result](Point p) {
+		if (_data.get_tile(p)->is_mine()) {
 			++result;
 		}
 	});
@@ -43,8 +43,8 @@ auto EmptyTile::mine_neighbor_count() const -> int {
 
 auto EmptyTile::clicked_neighbor_count() const -> int {
 	int result = 0;
-	_data.tiles.for_each_neighbor(pos(), [this, &result](Point p) {
-		if (_data.tiles.get_tile(p)->clicked()) {
+	_data.for_each_neighbor(pos(), [this, &result](Point p) {
+		if (_data.get_tile(p)->clicked()) {
 			++result;
 		}
 	});
@@ -53,8 +53,8 @@ auto EmptyTile::clicked_neighbor_count() const -> int {
 
 auto EmptyTile::flagged_neighbor_count() const -> int {
 	int result = 0;
-	_data.tiles.for_each_neighbor(pos(), [this, &result](Point p) {
-		if (_data.tiles.get_tile(p)->flagged()) {
+	_data.for_each_neighbor(pos(), [this, &result](Point p) {
+		if (_data.get_tile(p)->flagged()) {
 			++result;
 		}
 	});
@@ -71,8 +71,8 @@ auto EmptyTile::should_click_neighbors() const -> bool {
 }
 
 auto EmptyTile::click_neighbors() -> void {
-	_data.tiles.for_each_neighbor(pos(), [this](Point p) {
-		auto neighbor = _data.tiles.get_tile(p);
+	_data.for_each_neighbor(pos(), [this](Point p) {
+		auto neighbor = _data.get_tile(p);
 		if (neighbor->clickable()) {
 			neighbor->click();
 		}

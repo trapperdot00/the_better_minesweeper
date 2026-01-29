@@ -1,11 +1,11 @@
 #include "TileFactory.h"
 
-#include "BoardData.h"
+#include "GameContext.h"
 #include "EmptyTile.h"
 #include "MineTile.h"
 
 
-TileFactory::TileFactory(BoardData& data) :
+TileFactory::TileFactory(GameContext& data) :
 	_data{data}
 {}
 

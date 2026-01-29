@@ -1,12 +1,12 @@
 #ifndef TILE_H
 #define TILE_H
 
-struct BoardData;
+class GameContext;
 #include "Point.h"
 
 class Tile {
 public:
-	Tile(BoardData& data, Point pos);
+	Tile(GameContext& data, Point pos);
 
 	virtual auto is_mine() const -> bool = 0;
 	virtual auto clicked_rep() const -> char = 0;
@@ -27,7 +27,7 @@ public:
 	auto clicked() const -> bool;
 	auto flagged() const -> bool;
 protected:
-	BoardData& _data;
+	GameContext& _data;
 private:
 	Point _pos;
 	bool _clicked = false;
