@@ -10,6 +10,7 @@
 
 Game::Game(Difficulty diff) :
 	_ctx{diff.width, diff.height},
+	_cur{_ctx, Point{diff.width, diff.height}},
 	_factory{_ctx}
 {
 	place_mines(diff.mine_count);

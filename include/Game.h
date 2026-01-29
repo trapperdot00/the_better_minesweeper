@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "Point.h"
+#include "Cursor.h"
 #include "TileFactory.h"
 #include "GameContext.h"
 #include "Difficulty.h"
@@ -29,6 +30,7 @@ private:
 	auto place_empties() -> void;
 private:
 	GameContext _ctx;
+	Cursor _cur;
 	TileFactory _factory;
 };
 
