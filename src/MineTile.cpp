@@ -6,8 +6,8 @@ auto MineTile::is_mine() const -> bool {
 	return true;
 }
 
-auto MineTile::clicked_rep() const -> char {
-	return '*';
+auto MineTile::clicked_rep() const -> std::string {
+	return "*";
 }
 
 auto MineTile::click() -> void {

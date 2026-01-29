@@ -4,20 +4,22 @@
 class GameContext;
 #include "Point.h"
 
+#include <string>
+
 class Tile {
 public:
 	Tile(GameContext& data, Point pos);
 
 	virtual auto is_mine() const -> bool = 0;
-	virtual auto clicked_rep() const -> char = 0;
+	virtual auto clicked_rep() const -> std::string = 0;
 	virtual auto click() -> void;
 	virtual ~Tile() = default;
 
 	auto pos() const -> Point { return _pos; }
 
-	auto rep() const -> char;
-	auto untouched_rep() const -> char;
-	auto flagged_rep() const -> char;
+	auto rep() const -> std::string;
+	auto untouched_rep() const -> std::string;
+	auto flagged_rep() const -> std::string;
 
 	auto flag() -> void;
 

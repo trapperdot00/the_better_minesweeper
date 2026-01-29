@@ -2,16 +2,10 @@
 
 #include "GameContext.h"
 
-auto to_char(int i) -> char {
-	if (i < 0) return '0';
-	if (i > 9) return '9';
-	return '0' + static_cast<char>(i);
-}
-
-auto EmptyTile::clicked_rep() const -> char {
+auto EmptyTile::clicked_rep() const -> std::string {
 	return (mine_neighbor_count() > 0)
-		? to_char(mine_neighbor_count())
-		: ' ';
+		? std::to_string(mine_neighbor_count())
+		: " ";
 }
 
 auto EmptyTile::click() -> void {

@@ -7,7 +7,7 @@ Tile::Tile(GameContext& data, Point pos) :
 	_pos{pos}
 {}
 
-auto Tile::rep() const -> char {
+auto Tile::rep() const -> std::string {
 	if (clicked()) {
 		return clicked_rep();
 	} else if (flagged()) {
@@ -51,10 +51,10 @@ auto Tile::flagged() const -> bool {
 	return _flagged;
 }
 
-auto Tile::untouched_rep() const -> char {
-	return '.';
+auto Tile::untouched_rep() const -> std::string {
+	return ".";
 }
 
-auto Tile::flagged_rep() const -> char {
-	return 'P';
+auto Tile::flagged_rep() const -> std::string {
+	return "P";
 }
