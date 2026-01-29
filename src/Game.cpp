@@ -90,16 +90,25 @@ auto Game::print_rows() const -> void {
 }
 
 auto Game::print_row(int y) const -> void {
-	std::cout << y % 10 << " | ";
+	std::cout << y % 10 << " |";
 	for (int x = 0; x < _ctx.width(); ++x) {
 		const Point p{x, y};
+		if (p == _cur.pos()) {
+			std::cout << '>';
+		} else {
+			if (Point{p.x - 1, p.y} == _cur.pos()) {
+				std::cout << '<';
+			} else {
+				std::cout << ' ';
+			}
+		}
 		print_tile(p);
 	}
 	std::cout << "|\n";
 }
 
 auto Game::print_tile(Point p) const -> void {
-	std::cout << _ctx.get_tile(p)->rep() << ' ';
+	std::cout << _ctx.get_tile(p)->rep();
 }
 
 void Game::place_mines(int mine_count) {

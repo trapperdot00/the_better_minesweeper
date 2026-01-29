@@ -11,6 +11,8 @@ class Cursor {
 public:
 	Cursor(GameContext& ctx, Point size);
 
+	auto pos() const -> Point { return _pos; }
+
 	auto move(Point offset) -> void;
 	auto click() -> void;
 	auto flag() -> void;
