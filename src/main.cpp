@@ -6,8 +6,9 @@
 #include <cstring>
 #include <iostream>
 #include <stdexcept>
+#include <memory>
 
-Difficulty get_diff(const std::string& s) {
+Difficulty lookup_diff(const std::string& s) {
 	if (s == "beginner") {
 		return Difficulty::beginner;
 	} else if (s == "intermediate") {
@@ -19,18 +20,31 @@ Difficulty get_diff(const std::string& s) {
 	}
 }
 
-int main(int argc, char* argv[]) {
-	if (argc == 5 && std::strcmp("custom", argv[1]) == 0) {
-		const int width      = std::stoi(argv[2]);
-		const int height     = std::stoi(argv[3]);
-		const int mine_count = std::stoi(argv[4]);
-		const Difficulty diff{width, height, mine_count};
-		Game game{diff};
-		game.play();
+std::unique_ptr<Difficulty> parse_diff(int argc, char* argv[]) {
+	if (argc > 1 && std::string{argv[1]} == "custom") {
+		if (argc != 5) {
+			return nullptr;
+		}
+		int width;
+		int height;
+		int mine_count;
+		try {
+			width      = std::stoi(argv[2]);
+			height     = std::stoi(argv[3]);
+			mine_count = std::stoi(argv[4]);
+		} catch (...) {
+			return nullptr;
+		}
+		return std::make_unique<Difficulty>(width, height, mine_count);
 	} else if (argc == 2) {
-		Game game{get_diff(argv[1])};
-		game.play();
-	} else {
+		return std::make_unique<Difficulty>(lookup_diff(argv[1]));
+	}
+	return nullptr;
+}
+
+int main(int argc, char* argv[]) {
+	std::unique_ptr<Difficulty> diff = parse_diff(argc, argv);
+	if (!diff) {
 		std::cerr
 			<< "usage: <program> [difficulty]\n"
 			<< "  difficulty  ::= <preset_diff> | <custom_diff>\n"
@@ -40,5 +54,11 @@ int main(int argc, char* argv[]) {
 			<< "  height      ::= number\n"
 			<< "  mine_count  ::= number\n";
 		return 1;
+	}
+	try {
+		Game game{*diff};
+		game.play();
+	} catch (const std::exception& err) {
+		std::cerr << "Error! " << err.what() << '\n';
 	}
 }
