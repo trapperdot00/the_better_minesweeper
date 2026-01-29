@@ -20,33 +20,29 @@ Game::Game(Difficulty diff) :
 
 auto Game::play() -> void {
 	print();
-	char op;
-	int x;
-	int y;
-	while (!game_ended() && (std::cin >> op >> x >> y)) {
-		const Point p{x, y};
-		try {
-			switch (op) {
-			case 'c':
-				click(p);
-				break;
-			case 'f':
-				flag(p);
-				break;
-			}
-		} catch (const std::exception& e) {
-			std::cerr << "error: " << e.what() << '\n';
+	for (char op; !game_ended() && (std::cin >> op); ) {
+		switch (op) {
+		case 'w':
+			_cur.move(Point{0, -1});
+			break;
+		case 's':
+			_cur.move(Point{0, 1});
+			break;
+		case 'a':
+			_cur.move(Point{-1, 0});
+			break;
+		case 'd':
+			_cur.move(Point{1, 0});
+			break;
+		case 'c':
+			_cur.click();
+			break;
+		case 'f':
+			_cur.flag();
+			break;
 		}
 		print();
 	}
-}
-
-auto Game::click(Point p) -> void {
-	_ctx.get_tile(p)->click();
-}
-
-auto Game::flag(Point p) -> void {
-	_ctx.get_tile(p)->flag();
 }
 
 auto Game::print() const -> void {

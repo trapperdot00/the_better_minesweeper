@@ -13,8 +13,6 @@ public:
 
 	auto play() -> void;
 private:
-	auto click(Point p) -> void;
-	auto flag(Point p) -> void;
 	auto print() const -> void;
 
 	auto game_ended() const -> bool;
