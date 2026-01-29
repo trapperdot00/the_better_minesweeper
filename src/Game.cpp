@@ -125,6 +125,7 @@ void Game::place_mines(int mine_count) {
 		const Point p{x_gen(e), y_gen(e)};
 		if (!_ctx.get_tile(p)) {
 			_ctx.set_tile(p, _factory.create_mine(p));
+			_ctx.increment_mine_count();
 			--remaining;
 		}
 	}
