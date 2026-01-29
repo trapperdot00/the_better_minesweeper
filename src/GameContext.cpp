@@ -16,6 +16,14 @@ auto GameContext::size() const -> int {
 	return _tiles.size();
 }
 
+auto GameContext::remaining_tiles() const -> int {
+	return size() - clicked_count() - flagged_count();
+}
+
+auto GameContext::remaining_mines() const -> int {
+	return mine_count() - flagged_count();
+}
+
 auto GameContext::get_tile(Point p) const -> std::shared_ptr<Tile> {
 	return _tiles.get_tile(p);
 }

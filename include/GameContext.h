@@ -16,6 +16,12 @@ public:
 	auto height() const -> int;
 	auto size() const -> int;
 
+	auto mine_count() const -> int { return _mine_count; }
+	auto clicked_count() const -> int { return _clicked; }
+	auto flagged_count() const -> int { return _flagged; }
+	auto remaining_tiles() const -> int;
+	auto remaining_mines() const -> int;
+
 	auto get_tile(Point p) const -> std::shared_ptr<Tile>;
 	auto set_tile(Point p, std::shared_ptr<Tile> tile) -> void;
 
@@ -27,10 +33,6 @@ public:
 
 	auto state() const -> GameState;
 	auto set_state(GameState state) -> void;
-
-	auto flagged_count() const -> int { return _flagged; }
-	auto clicked_count() const -> int { return _clicked; }
-	auto mine_count() const -> int { return _mine_count; }
 
 	auto increment_mine_count() -> void;
 	auto decrement_mine_count() -> void;
