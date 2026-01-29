@@ -104,6 +104,11 @@ auto Game::print_row(int y) const -> void {
 		}
 		print_tile(p);
 	}
+	if (_cur.pos().y == y && _cur.pos().x == _ctx.width() - 1) {
+		std::cout << '<';
+	} else {
+		std::cout << ' ';
+	}
 	std::cout << "|\n";
 }
 

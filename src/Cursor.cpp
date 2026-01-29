@@ -8,8 +8,8 @@ Cursor::Cursor(GameContext& ctx, Point size) :
 {}
 
 auto Cursor::move(Point offset) -> void {
-	const int x = std::clamp(_pos.x + offset.x, 0, _size.x);
-	const int y = std::clamp(_pos.y + offset.y, 0, _size.y);
+	const int x = std::clamp(_pos.x + offset.x, 0, _size.x - 1);
+	const int y = std::clamp(_pos.y + offset.y, 0, _size.y - 1);
 	_pos = Point{x, y};
 }
 
