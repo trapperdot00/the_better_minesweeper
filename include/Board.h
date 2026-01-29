@@ -26,7 +26,7 @@ public:
 
 	auto game_ended() const -> bool {
 		return remaining_mines() == remaining_tiles()
-			|| _data.get_state() != GameState::running;
+			|| _data.state() != GameState::running;
 	}
 
 	auto click(Point p) -> void;

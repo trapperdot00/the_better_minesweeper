@@ -12,7 +12,7 @@ auto MineTile::clicked_rep() const -> char {
 
 auto MineTile::click() -> void {
 	Tile::click();
-	if (clicked() && _data.get_state() != GameState::lost) {
+	if (clicked() && _data.state() != GameState::lost) {
 		lose_game();
 	}
 }

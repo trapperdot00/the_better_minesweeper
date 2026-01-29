@@ -4,7 +4,6 @@
 #include "EmptyTile.h"
 #include "MineTile.h"
 
-
 TileFactory::TileFactory(GameContext& data) :
 	_data{data}
 {}

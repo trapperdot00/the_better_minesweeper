@@ -25,7 +25,7 @@ public:
 
 	auto in_range(Point p) const -> bool;
 
-	auto get_state() const -> GameState;
+	auto state() const -> GameState;
 	auto set_state(GameState state) -> void;
 
 	auto flagged_count() const -> int { return _flagged; }

@@ -37,7 +37,7 @@ auto GameContext::in_range(Point p) const -> bool {
 	return _tiles.in_range(p);
 }
 
-auto GameContext::get_state() const -> GameState {
+auto GameContext::state() const -> GameState {
 	return _state;
 }
 
