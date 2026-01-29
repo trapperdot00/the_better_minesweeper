@@ -7,29 +7,6 @@
 #include <iostream>
 #include <stdexcept>
 
-void play(Game& game) {
-	game.print();
-	char op;
-	int x;
-	int y;
-	while (!game.game_ended() && (std::cin >> op >> x >> y)) {
-		const Point p{x, y};
-		try {
-			switch (op) {
-			case 'c':
-				game.click(p);
-				break;
-			case 'f':
-				game.flag(p);
-				break;
-			}
-		} catch (const std::exception& e) {
-			std::cerr << "error: " << e.what() << '\n';
-		}
-		game.print();
-	}
-}
-
 Difficulty get_diff(const std::string& s) {
 	if (s == "beginner") {
 		return Difficulty::beginner;
@@ -49,10 +26,10 @@ int main(int argc, char* argv[]) {
 		const int mine_count = std::stoi(argv[4]);
 		const Difficulty diff{width, height, mine_count};
 		Game game{diff};
-		play(game);
+		game.play();
 	} else if (argc == 2) {
 		Game game{get_diff(argv[1])};
-		play(game);
+		game.play();
 	} else {
 		std::cerr
 			<< "usage: <program> [difficulty]\n"

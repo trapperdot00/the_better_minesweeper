@@ -10,21 +10,14 @@ class Game {
 public:
 	Game(Difficulty diff);
 
-	auto size() const -> int;
-	auto width() const -> int;
-	auto height() const -> int;
-	auto mine_count() const -> int;
-	auto clicked() const -> int;
-	auto flagged() const -> int;
-	auto remaining_tiles() const -> int;
-	auto remaining_mines() const -> int;
-
-	auto game_ended() const -> bool;
-
+	auto play() -> void;
+private:
 	auto click(Point p) -> void;
 	auto flag(Point p) -> void;
 	auto print() const -> void;
-private:
+
+	auto game_ended() const -> bool;
+
 	auto print_info() const -> void;
 	auto print_header() const -> void;
 	auto print_footer() const -> void;

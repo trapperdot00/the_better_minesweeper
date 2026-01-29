@@ -17,41 +17,27 @@ Game::Game(Difficulty diff) :
 	_ctx.set_state(GameState::running);
 }
 
-auto Game::size() const -> int {
-	return _ctx.size();
-}
-
-auto Game::width() const -> int {
-	return _ctx.width();
-}
-
-auto Game::height() const -> int {
-	return _ctx.height();
-}
-
-auto Game::mine_count() const -> int {
-	return _ctx.mine_count();
-}
-
-auto Game::clicked() const -> int {
-	return _ctx.clicked_count();
-}
-
-auto Game::flagged() const -> int {
-	return _ctx.flagged_count();
-}
-
-auto Game::remaining_tiles() const -> int {
-	return _ctx.remaining_tiles();
-}
-
-auto Game::remaining_mines() const -> int {
-	return _ctx.remaining_mines();
-}
-
-auto Game::game_ended() const -> bool {
-	return remaining_mines() == remaining_tiles()
-		|| _ctx.state() != GameState::running;
+auto Game::play() -> void {
+	print();
+	char op;
+	int x;
+	int y;
+	while (!game_ended() && (std::cin >> op >> x >> y)) {
+		const Point p{x, y};
+		try {
+			switch (op) {
+			case 'c':
+				click(p);
+				break;
+			case 'f':
+				flag(p);
+				break;
+			}
+		} catch (const std::exception& e) {
+			std::cerr << "error: " << e.what() << '\n';
+		}
+		print();
+	}
 }
 
 auto Game::click(Point p) -> void {
@@ -69,12 +55,17 @@ auto Game::print() const -> void {
 	print_footer();
 }
 
+auto Game::game_ended() const -> bool {
+	return _ctx.remaining_mines() == _ctx.remaining_tiles()
+		|| _ctx.state() != GameState::running;
+}
+
 auto Game::print_info() const -> void {
 	std::cout
-		<< "clicked: " << clicked() << '\n'
-		<< "flagged: " << flagged() << '\n'
-		<< "remaining tiles: " << remaining_tiles() << '\n'
-		<< "remaining mines: " << remaining_mines() << '\n';
+		<< "clicked: " << _ctx.clicked_count() << '\n'
+		<< "flagged: " << _ctx.flagged_count() << '\n'
+		<< "remaining tiles: " << _ctx.remaining_tiles() << '\n'
+		<< "remaining mines: " << _ctx.remaining_mines() << '\n';
 }
 
 auto Game::print_header() const -> void {
@@ -96,14 +87,14 @@ auto Game::print_footer() const -> void {
 }
 
 auto Game::print_rows() const -> void {
-	for (int y = 0; y < height(); ++y) {
+	for (int y = 0; y < _ctx.height(); ++y) {
 		print_row(y);
 	}
 }
 
 auto Game::print_row(int y) const -> void {
 	std::cout << y % 10 << " | ";
-	for (int x = 0; x < width(); ++x) {
+	for (int x = 0; x < _ctx.width(); ++x) {
 		const Point p{x, y};
 		print_tile(p);
 	}
@@ -115,12 +106,12 @@ auto Game::print_tile(Point p) const -> void {
 }
 
 void Game::place_mines(int mine_count) {
-	if (mine_count > size()) {
+	if (mine_count > _ctx.size()) {
 		throw std::runtime_error{"more mines than tiles"};
 	}
 	std::mt19937 e{std::random_device{}()};
-	std::uniform_int_distribution<int> x_gen(0, width() - 1);
-	std::uniform_int_distribution<int> y_gen(0, height() - 1);
+	std::uniform_int_distribution<int> x_gen(0, _ctx.width() - 1);
+	std::uniform_int_distribution<int> y_gen(0, _ctx.height() - 1);
 	for (int remaining = mine_count; remaining > 0; ) {
 		const Point p{x_gen(e), y_gen(e)};
 		if (!_ctx.get_tile(p)) {
@@ -132,8 +123,8 @@ void Game::place_mines(int mine_count) {
 }
 
 void Game::place_empties() {
-	for (int y = 0; y < height(); ++y) {
-		for (int x = 0; x < width(); ++x) {
+	for (int y = 0; y < _ctx.height(); ++y) {
+		for (int x = 0; x < _ctx.width(); ++x) {
 			const Point p{x, y};
 			if (!_ctx.get_tile(p)) {
 				_ctx.set_tile(p, _factory.create_empty(p));
