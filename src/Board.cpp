@@ -14,6 +14,7 @@ Board::Board(int width, int height, int mine_count) :
 {
 	place_mines();
 	place_empties();
+	_data.state = GameState::running;
 }
 
 Board::Board(Difficulty diff) :

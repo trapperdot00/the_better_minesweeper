@@ -20,7 +20,10 @@ public:
 	auto remaining_tiles() const -> int { return size() - clicked() - flagged(); }
 	auto remaining_mines() const -> int { return mine_count() - flagged(); }
 
-	auto game_ended() const -> bool { return remaining_tiles() == 0; }
+	auto game_ended() const -> bool {
+		return remaining_mines() == remaining_tiles()
+			|| _data.state != GameState::running;
+	}
 
 	auto click(Point p) -> void;
 	auto flag(Point p) -> void;
