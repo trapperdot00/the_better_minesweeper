@@ -15,13 +15,17 @@ void play(Board& b) {
 	int y;
 	while (!b.game_ended() && (std::cin >> op >> x >> y)) {
 		const Point p{x, y};
-		switch (op) {
-		case 'c':
-			b.click(p);
-			break;
-		case 'f':
-			b.flag(p);
-			break;
+		try {
+			switch (op) {
+			case 'c':
+				b.click(p);
+				break;
+			case 'f':
+				b.flag(p);
+				break;
+			}
+		} catch (const std::exception& e) {
+			std::cerr << "error: " << e.what() << '\n';
 		}
 		b.print();
 	}
