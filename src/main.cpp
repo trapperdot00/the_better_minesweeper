@@ -1,6 +1,5 @@
-#include "Board.h"
+#include "Game.h"
 #include "Point.h"
-#include "Tiles.h"
 #include "Difficulty.h"
 
 #include <string>
@@ -8,26 +7,26 @@
 #include <iostream>
 #include <stdexcept>
 
-void play(Board& b) {
-	b.print();
+void play(Game& game) {
+	game.print();
 	char op;
 	int x;
 	int y;
-	while (!b.game_ended() && (std::cin >> op >> x >> y)) {
+	while (!game.game_ended() && (std::cin >> op >> x >> y)) {
 		const Point p{x, y};
 		try {
 			switch (op) {
 			case 'c':
-				b.click(p);
+				game.click(p);
 				break;
 			case 'f':
-				b.flag(p);
+				game.flag(p);
 				break;
 			}
 		} catch (const std::exception& e) {
 			std::cerr << "error: " << e.what() << '\n';
 		}
-		b.print();
+		game.print();
 	}
 }
 
@@ -45,14 +44,15 @@ Difficulty get_diff(const std::string& s) {
 
 int main(int argc, char* argv[]) {
 	if (argc == 5 && std::strcmp("custom", argv[1]) == 0) {
-		int width      = std::stoi(argv[2]);
-		int height     = std::stoi(argv[3]);
-		int mine_count = std::stoi(argv[4]);
-		Board b{width, height, mine_count};
-		play(b);
+		const int width      = std::stoi(argv[2]);
+		const int height     = std::stoi(argv[3]);
+		const int mine_count = std::stoi(argv[4]);
+		const Difficulty diff{width, height, mine_count};
+		Game game{diff};
+		play(game);
 	} else if (argc == 2) {
-		Board b{get_diff(argv[1])};
-		play(b);
+		Game game{get_diff(argv[1])};
+		play(game);
 	} else {
 		std::cerr
 			<< "usage: <program> [difficulty]\n"

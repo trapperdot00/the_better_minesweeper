@@ -1,15 +1,14 @@
-#ifndef BOARD_H
-#define BOARD_H
+#ifndef GAME_H
+#define GAME_H
 
 #include "Point.h"
 #include "TileFactory.h"
 #include "GameContext.h"
 #include "Difficulty.h"
 
-class Board {
+class Game {
 public:
-	Board(int width, int height, int mine_count);
-	Board(Difficulty diff);
+	Game(Difficulty diff);
 
 	auto size() const -> int { return _data.size(); }
 	auto width() const -> int { return _data.width(); }
