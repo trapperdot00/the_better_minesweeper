@@ -26,7 +26,8 @@ auto Tiles::set_tile(Point p, std::shared_ptr<Tile> tile) -> void {
 	_data[to_index(p)] = tile;
 }
 
-auto Tiles::for_each_neighbor(Point p, std::function<void(Point)> func) const -> void {
+auto Tiles::for_each_neighbor
+(Point p, std::function<void(Point)> func) const -> void {
 	for (int y = neighbor_min_y(p); y <= neighbor_max_y(p); ++y) {
 		for (int x = neighbor_min_x(p); x <= neighbor_max_x(p); ++x) {
 			const Point neighbor{x, y};
