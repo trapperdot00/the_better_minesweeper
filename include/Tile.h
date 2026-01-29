@@ -8,6 +8,8 @@ class Tile {
 public:
 	Tile(BoardData& data, Point pos);
 
+	auto pos() const -> Point { return _pos; }
+
 	auto rep() const -> char;
 	virtual auto untouched_rep() const -> char;
 	virtual auto flagged_rep() const -> char;
@@ -26,8 +28,8 @@ public:
 	virtual ~Tile() = default;
 protected:
 	BoardData& _data;
-	Point _pos;
 private:
+	Point _pos;
 	bool _clicked = false;
 	bool _flagged = false;
 };
