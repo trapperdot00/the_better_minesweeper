@@ -8,24 +8,24 @@ class Tile {
 public:
 	Tile(BoardData& data, Point pos);
 
+	virtual auto is_mine() const -> bool = 0;
+	virtual auto clicked_rep() const -> char = 0;
+	virtual auto click() -> void;
+	virtual ~Tile() = default;
+
 	auto pos() const -> Point { return _pos; }
 
 	auto rep() const -> char;
-	virtual auto untouched_rep() const -> char;
-	virtual auto flagged_rep() const -> char;
-	virtual auto clicked_rep() const -> char = 0;
+	auto untouched_rep() const -> char;
+	auto flagged_rep() const -> char;
 
-	virtual auto click() -> void;
-	virtual auto flag() -> void;
+	auto flag() -> void;
 
 	auto clickable() const -> bool;
 	auto flaggable() const -> bool;
 
 	auto clicked() const -> bool;
 	auto flagged() const -> bool;
-	virtual auto is_mine() const -> bool = 0;
-
-	virtual ~Tile() = default;
 protected:
 	BoardData& _data;
 private:
