@@ -1,7 +1,7 @@
 #ifndef EMPTYTILE_H
 #define EMPTYTILE_H
 
-struct GameContext;
+class GameContext;
 #include "Point.h"
 #include "Tile.h"
 #include "AnsiColor.h"
