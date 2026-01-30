@@ -2,12 +2,19 @@
 
 #include "GameContext.h"
 
+MineTile::MineTile(GameContext& data, Point pos,
+		AnsiColor flagged_color,
+		AnsiColor clicked_color) :
+	Tile{data, pos, flagged_color},
+	_clicked_color{clicked_color}
+{}
+
 auto MineTile::is_mine() const -> bool {
 	return true;
 }
 
 auto MineTile::clicked_rep() const -> std::string {
-	return "\e[0;31m*\e[0m";
+	return _clicked_color.wrap("*");
 }
 
 auto MineTile::click() -> void {

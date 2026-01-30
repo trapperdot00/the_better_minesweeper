@@ -2,12 +2,17 @@
 
 #include "GameContext.h"
 
+EmptyTile::EmptyTile(GameContext& ctx, Point pos,
+		AnsiColor flagged_color,
+		AnsiColor neighbor_color) :
+	Tile{ctx, pos, flagged_color},
+	_neighbor_color{neighbor_color}
+{}
+
 auto EmptyTile::clicked_rep() const -> std::string {
-	return std::string{"\e[0;34m"}
-		+ ((mine_neighbor_count() > 0)
-			? std::to_string(mine_neighbor_count())
-			: " ")
-		+ "\e[0m";
+	return (mine_neighbor_count() > 0)
+		? _neighbor_color.wrap(std::to_string(mine_neighbor_count()))
+		: " ";
 }
 
 auto EmptyTile::click() -> void {

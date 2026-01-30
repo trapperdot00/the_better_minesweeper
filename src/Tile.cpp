@@ -2,9 +2,11 @@
 
 #include "GameContext.h"
 
-Tile::Tile(GameContext& data, Point pos) :
+Tile::Tile(GameContext& data, Point pos,
+		AnsiColor flagged_color) :
 	_data{data},
-	_pos{pos}
+	_pos{pos},
+	_flagged_color{flagged_color}
 {}
 
 auto Tile::rep() const -> std::string {
@@ -56,5 +58,5 @@ auto Tile::untouched_rep() const -> std::string {
 }
 
 auto Tile::flagged_rep() const -> std::string {
-	return "\e[0;33mP\e[0m";
+	return _flagged_color.wrap("P");
 }

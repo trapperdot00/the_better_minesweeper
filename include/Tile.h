@@ -3,12 +3,14 @@
 
 class GameContext;
 #include "Point.h"
+#include "AnsiColor.h"
 
 #include <string>
 
 class Tile {
 public:
-	Tile(GameContext& data, Point pos);
+	Tile(GameContext& data, Point pos,
+			AnsiColor flagged_color);
 
 	virtual auto is_mine() const -> bool = 0;
 	virtual auto clicked_rep() const -> std::string = 0;
@@ -32,6 +34,7 @@ protected:
 	GameContext& _data;
 private:
 	Point _pos;
+	AnsiColor _flagged_color;
 	bool _clicked = false;
 	bool _flagged = false;
 };

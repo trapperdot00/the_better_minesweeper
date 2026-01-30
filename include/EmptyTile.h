@@ -1,14 +1,19 @@
 #ifndef EMPTYTILE_H
 #define EMPTYTILE_H
 
+struct GameContext;
+#include "Point.h"
 #include "Tile.h"
+#include "AnsiColor.h"
 
 #include <string>
 #include <functional>
 
 class EmptyTile : public Tile {
 public:
-	using Tile::Tile;
+	EmptyTile(GameContext& ctx, Point pos,
+			AnsiColor flagged_color,
+			AnsiColor neighbor_color);
 
 	auto clicked_rep() const -> std::string override;
 	auto click() -> void override;
@@ -31,6 +36,8 @@ private:
 	auto neighbor_max_y() const -> int;
 
 	void for_each_neighbor(std::function<void(Point)> func) const;
+private:
+	AnsiColor _neighbor_color;
 };
 
 #endif
