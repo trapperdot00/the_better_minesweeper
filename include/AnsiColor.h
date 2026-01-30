@@ -5,10 +5,6 @@
 
 class AnsiColor {
 public:
-	AnsiColor(const std::string& begin) :
-		_begin{begin}
-	{}
-
 	std::string wrap(const std::string& text) const {
 		return begin() + text + end();
 	}
@@ -24,6 +20,10 @@ public:
 	static const AnsiColor purple;
 	static const AnsiColor cyan;
 	static const AnsiColor white;
+private:
+	AnsiColor(const std::string& begin) :
+		_begin{begin}
+	{}
 private:
 	std::string _begin;
 };
