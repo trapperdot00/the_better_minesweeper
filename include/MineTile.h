@@ -15,7 +15,7 @@ public:
 
 	auto clicked_rep() const -> std::string override;
 	auto is_mine() const -> bool override;
-	auto click() -> void override;
+	auto click(Tile* prev = nullptr) -> void override;
 private:
 	auto lose_game() -> void;
 	auto expose_all_mines() -> void;

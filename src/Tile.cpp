@@ -19,7 +19,7 @@ auto Tile::rep() const -> std::string {
 	}
 }
 
-auto Tile::click() -> void {
+auto Tile::click(Tile*) -> void {
 	if (clickable()) {
 		_clicked = true;
 		_data.increment_clicked_count();

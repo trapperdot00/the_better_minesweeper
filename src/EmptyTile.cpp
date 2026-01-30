@@ -15,9 +15,9 @@ auto EmptyTile::clicked_rep() const -> std::string {
 		: " ";
 }
 
-auto EmptyTile::click() -> void {
+auto EmptyTile::click(Tile* prev) -> void {
 	Tile::click();
-	if (should_click_neighbors()) {
+	if (should_click_neighbors(prev)) {
 		click_neighbors();
 	}
 }
@@ -66,16 +66,18 @@ auto EmptyTile::all_neighboring_mines_assumed() const -> bool {
 	return mine_neighbor_count() == flagged_neighbor_count();
 }
 
-auto EmptyTile::should_click_neighbors() const -> bool {
-	return (!clicked() && mine_neighbor_count() == 0)
-		|| all_neighboring_mines_assumed();
+auto EmptyTile::should_click_neighbors(Tile* prev) const -> bool {
+	if (prev) {
+		return mine_neighbor_count() == 0;
+	}
+	return all_neighboring_mines_assumed();
 }
 
 auto EmptyTile::click_neighbors() -> void {
 	_data.for_each_neighbor(pos(), [this](Point p) {
 		auto neighbor = _data.get_tile(p);
 		if (neighbor->clickable()) {
-			neighbor->click();
+			neighbor->click(this);
 		}
 	});
 }

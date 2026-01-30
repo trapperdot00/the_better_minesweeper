@@ -16,7 +16,7 @@ public:
 			AnsiColor neighbor_color);
 
 	auto clicked_rep() const -> std::string override;
-	auto click() -> void override;
+	auto click(Tile* prev = nullptr) -> void override;
 	auto is_mine() const -> bool override;
 
 	auto neighbor_count() const -> int;
@@ -25,7 +25,7 @@ public:
 	auto flagged_neighbor_count() const -> int;
 	auto all_neighboring_mines_assumed() const -> bool;
 private:
-	auto should_click_neighbors() const -> bool;
+	auto should_click_neighbors(Tile* prev) const -> bool;
 	auto click_neighbors() -> void;
 
 	auto clamp_x(int x) const -> int;

@@ -14,7 +14,7 @@ public:
 
 	virtual auto is_mine() const -> bool = 0;
 	virtual auto clicked_rep() const -> std::string = 0;
-	virtual auto click() -> void;
+	virtual auto click(Tile* prev = nullptr) -> void;
 	virtual ~Tile() = default;
 
 	auto pos() const -> Point { return _pos; }

@@ -17,7 +17,7 @@ auto MineTile::clicked_rep() const -> std::string {
 	return _clicked_color.wrap("*");
 }
 
-auto MineTile::click() -> void {
+auto MineTile::click(Tile*) -> void {
 	Tile::click();
 	if (clicked() && _data.state() != GameState::lost) {
 		lose_game();
