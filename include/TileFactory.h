@@ -1,9 +1,7 @@
 #ifndef TILEFACTORY_H
 #define TILEFACTORY_H
 
-struct Point;
-class GameContext;
-class Tile;
+#include "FwdDecls.h"
 
 #include <memory>
 

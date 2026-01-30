@@ -1,5 +1,8 @@
 #include "Cursor.h"
 
+#include "GameContext.h"
+#include "Tile.h"
+
 #include <algorithm>
 
 Cursor::Cursor(GameContext& ctx, Point size) :

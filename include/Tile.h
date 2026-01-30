@@ -1,7 +1,7 @@
 #ifndef TILE_H
 #define TILE_H
 
-class GameContext;
+#include "FwdDecls.h"
 #include "Point.h"
 #include "AnsiColor.h"
 

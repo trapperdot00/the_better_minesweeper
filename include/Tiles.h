@@ -1,9 +1,7 @@
 #ifndef TILES_H
 #define TILES_H
 
-class Tile;
-struct Point;
-
+#include "FwdDecls.h"
 #include <vector>
 #include <memory>
 #include <functional>

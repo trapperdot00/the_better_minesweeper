@@ -1,9 +1,8 @@
 #ifndef CURSOR_H
 #define CURSOR_H
 
+#include "FwdDecls.h"
 #include "Point.h"
-#include "GameContext.h"
-#include "Tile.h"
 
 #include <memory>
 
