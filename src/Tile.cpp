@@ -56,5 +56,5 @@ auto Tile::untouched_rep() const -> std::string {
 }
 
 auto Tile::flagged_rep() const -> std::string {
-	return "P";
+	return "\e[0;33mP\e[0m";
 }

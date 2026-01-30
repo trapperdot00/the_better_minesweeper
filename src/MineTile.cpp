@@ -7,7 +7,7 @@ auto MineTile::is_mine() const -> bool {
 }
 
 auto MineTile::clicked_rep() const -> std::string {
-	return "*";
+	return "\e[0;31m*\e[0m";
 }
 
 auto MineTile::click() -> void {

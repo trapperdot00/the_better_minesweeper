@@ -3,9 +3,11 @@
 #include "GameContext.h"
 
 auto EmptyTile::clicked_rep() const -> std::string {
-	return (mine_neighbor_count() > 0)
-		? std::to_string(mine_neighbor_count())
-		: " ";
+	return std::string{"\e[0;34m"}
+		+ ((mine_neighbor_count() > 0)
+			? std::to_string(mine_neighbor_count())
+			: " ")
+		+ "\e[0m";
 }
 
 auto EmptyTile::click() -> void {
