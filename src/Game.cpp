@@ -11,10 +11,9 @@
 Game::Game(Difficulty diff) :
 	_ctx{diff.width, diff.height},
 	_cur{_ctx, Point{diff.width, diff.height}},
-	_factory{_ctx}
+	_placer{_ctx, diff}
 {
-	place_mines(diff.mine_count);
-	place_empties();
+	_placer.place_tiles();
 	_ctx.set_state(GameState::running);
 }
 
@@ -114,32 +113,4 @@ auto Game::print_row(int y) const -> void {
 
 auto Game::print_tile(Point p) const -> void {
 	std::cout << _ctx.get_tile(p)->rep();
-}
-
-void Game::place_mines(int mine_count) {
-	if (mine_count > _ctx.size()) {
-		throw std::runtime_error{"more mines than tiles"};
-	}
-	std::mt19937 e{std::random_device{}()};
-	std::uniform_int_distribution<int> x_gen(0, _ctx.width() - 1);
-	std::uniform_int_distribution<int> y_gen(0, _ctx.height() - 1);
-	for (int remaining = mine_count; remaining > 0; ) {
-		const Point p{x_gen(e), y_gen(e)};
-		if (!_ctx.get_tile(p)) {
-			_ctx.set_tile(p, _factory.create_mine(p));
-			_ctx.increment_mine_count();
-			--remaining;
-		}
-	}
-}
-
-void Game::place_empties() {
-	for (int y = 0; y < _ctx.height(); ++y) {
-		for (int x = 0; x < _ctx.width(); ++x) {
-			const Point p{x, y};
-			if (!_ctx.get_tile(p)) {
-				_ctx.set_tile(p, _factory.create_empty(p));
-			}
-		}
-	}
 }

@@ -3,9 +3,9 @@
 
 #include "Point.h"
 #include "Cursor.h"
-#include "TileFactory.h"
 #include "GameContext.h"
 #include "Difficulty.h"
+#include "TilePlacer.h"
 
 class Game {
 public:
@@ -29,7 +29,7 @@ private:
 private:
 	GameContext _ctx;
 	Cursor _cur;
-	TileFactory _factory;
+	TilePlacer _placer;
 };
 
 #endif
