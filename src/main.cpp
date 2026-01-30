@@ -3,7 +3,6 @@
 #include "Difficulty.h"
 
 #include <string>
-#include <cstring>
 #include <iostream>
 #include <stdexcept>
 #include <memory>
@@ -25,17 +24,16 @@ std::unique_ptr<Difficulty> parse_diff(int argc, char* argv[]) {
 		if (argc != 5) {
 			return nullptr;
 		}
-		int width;
-		int height;
-		int mine_count;
 		try {
-			width      = std::stoi(argv[2]);
-			height     = std::stoi(argv[3]);
-			mine_count = std::stoi(argv[4]);
+			int width      = std::stoi(argv[2]);
+			int height     = std::stoi(argv[3]);
+			int mine_count = std::stoi(argv[4]);
+			return std::make_unique<Difficulty>(
+				width, height, mine_count
+			);
 		} catch (...) {
 			return nullptr;
 		}
-		return std::make_unique<Difficulty>(width, height, mine_count);
 	} else if (argc == 2) {
 		return std::make_unique<Difficulty>(lookup_diff(argv[1]));
 	}
