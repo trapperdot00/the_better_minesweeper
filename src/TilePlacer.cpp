@@ -29,7 +29,6 @@ auto TilePlacer::place_mine_tiles() -> void {
 		const Point p{_x_gen(_rand), _y_gen(_rand)};
 		if (!_ctx.get_tile(p)) {
 			_ctx.set_tile(p, _factory.create_mine(p));
-			_ctx.increment_mine_count();
 			--remaining;
 		}
 	}

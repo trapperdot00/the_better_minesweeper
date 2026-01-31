@@ -22,18 +22,12 @@ auto Tile::rep() const -> std::string {
 auto Tile::click(Tile*) -> void {
 	if (clickable()) {
 		_clicked = true;
-		_data.increment_clicked_count();
 	}
 }
 
 auto Tile::flag() -> void {
 	if (flaggable()) {
 		_flagged = !_flagged;
-		if (_flagged) {
-			_data.increment_flagged_count();
-		} else {
-			_data.decrement_flagged_count();
-		}
 	}
 }
 

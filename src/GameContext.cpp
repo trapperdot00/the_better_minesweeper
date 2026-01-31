@@ -1,5 +1,7 @@
 #include "GameContext.h"
 
+#include "Tile.h"
+
 GameContext::GameContext(int width, int height) :
 	_tiles{width, height}
 {}
@@ -14,6 +16,36 @@ auto GameContext::height() const -> int {
 
 auto GameContext::size() const -> int {
 	return _tiles.size();
+}
+
+auto GameContext::mine_count() const -> int {
+	int result = 0;
+	for_each([&result, this](Point p) {
+		if (_tiles.get_tile(p)->is_mine()) {
+			++result;
+		}
+	});
+	return result;
+}
+
+auto GameContext::clicked_count() const -> int {
+	int result = 0;
+	for_each([&result, this](Point p) {
+		if (_tiles.get_tile(p)->clicked()) {
+			++result;
+		}
+	});
+	return result;
+}
+
+auto GameContext::flagged_count() const -> int {
+	int result = 0;
+	for_each([&result, this](Point p) {
+		if (_tiles.get_tile(p)->flagged()) {
+			++result;
+		}
+	});
+	return result;
 }
 
 auto GameContext::remaining_tiles() const -> int {
@@ -51,28 +83,4 @@ auto GameContext::state() const -> GameState {
 
 auto GameContext::set_state(GameState new_state) -> void {
 	_state = new_state;
-}
-
-auto GameContext::increment_mine_count() -> void {
-	++_mine_count;
-}
-
-auto GameContext::decrement_mine_count() -> void {
-	--_mine_count;
-}
-
-auto GameContext::increment_clicked_count() -> void {
-	++_clicked;
-}
-
-auto GameContext::decrement_clicked_count() -> void {
-	--_clicked;
-}
-
-auto GameContext::increment_flagged_count() -> void {
-	++_flagged;
-}
-
-auto GameContext::decrement_flagged_count() -> void {
-	--_flagged;
 }
