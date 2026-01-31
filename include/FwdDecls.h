@@ -9,10 +9,13 @@ class Tile;
 class EmptyTile;
 class MineTile;
 class TileFactory;
+class TilePlacer;
 
 class Tiles;
 class Cursor;
+enum class GameState;
 class GameContext;
+class UI;
 class Game;
 
 #endif
