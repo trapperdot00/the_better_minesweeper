@@ -30,8 +30,7 @@ auto MineTile::lose_game() -> void {
 }
 
 auto MineTile::expose_all_mines() -> void {
-	_data.for_each([this](Point p) {
-		auto tile = _data.get_tile(p);
+	_data.for_each([this](auto tile) {
 		if (tile->is_mine()) {
 			tile->click();
 		}

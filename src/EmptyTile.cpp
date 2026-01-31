@@ -28,14 +28,14 @@ auto EmptyTile::is_mine() const -> bool {
 
 auto EmptyTile::neighbor_count() const -> int {
 	int result = 0;
-	_data.for_each_neighbor(pos(), [&result](Point) { ++result; });
+	_data.for_each_neighbor(pos(), [&result](auto) { ++result; });
 	return result;
 }
 
 auto EmptyTile::mine_neighbor_count() const -> int {
 	int result = 0;
-	_data.for_each_neighbor(pos(), [this, &result](Point p) {
-		if (_data.get_tile(p)->is_mine()) {
+	_data.for_each_neighbor(pos(), [this, &result](auto neighbor) {
+		if (neighbor->is_mine()) {
 			++result;
 		}
 	});
@@ -44,8 +44,8 @@ auto EmptyTile::mine_neighbor_count() const -> int {
 
 auto EmptyTile::clicked_neighbor_count() const -> int {
 	int result = 0;
-	_data.for_each_neighbor(pos(), [this, &result](Point p) {
-		if (_data.get_tile(p)->clicked()) {
+	_data.for_each_neighbor(pos(), [this, &result](auto neighbor) {
+		if (neighbor->clicked()) {
 			++result;
 		}
 	});
@@ -54,8 +54,8 @@ auto EmptyTile::clicked_neighbor_count() const -> int {
 
 auto EmptyTile::flagged_neighbor_count() const -> int {
 	int result = 0;
-	_data.for_each_neighbor(pos(), [this, &result](Point p) {
-		if (_data.get_tile(p)->flagged()) {
+	_data.for_each_neighbor(pos(), [this, &result](auto neighbor) {
+		if (neighbor->flagged()) {
 			++result;
 		}
 	});
@@ -74,8 +74,7 @@ auto EmptyTile::should_click_neighbors(Tile* prev) const -> bool {
 }
 
 auto EmptyTile::click_neighbors() -> void {
-	_data.for_each_neighbor(pos(), [this](Point p) {
-		auto neighbor = _data.get_tile(p);
+	_data.for_each_neighbor(pos(), [this](auto neighbor) {
 		if (neighbor->clickable()) {
 			neighbor->click(this);
 		}

@@ -25,9 +25,9 @@ public:
 	auto get_tile(Point p) const -> std::shared_ptr<Tile>;
 	auto set_tile(Point p, std::shared_ptr<Tile> tile) -> void;
 
-	auto for_each(std::function<void(Point)> f) const -> void;
+	auto for_each(std::function<void(std::shared_ptr<Tile>)> f) const -> void;
 	auto for_each_neighbor
-		(Point p, std::function<void(Point)> f) const -> void;
+		(Point p, std::function<void(std::shared_ptr<Tile>)> f) const -> void;
 
 	auto in_range(Point p) const -> bool;
 
