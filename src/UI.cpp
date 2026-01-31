@@ -21,17 +21,21 @@ auto UI::draw_info() -> void {
 		<< "remaining mines: " << _ctx.remaining_mines() << '\n';
 }
 
+auto UI::draw_separator_line() -> void {
+	std::cout << std::string(_ctx.width() * 2 + 5, '-') << '\n';
+}
+
 auto UI::draw_header() -> void {
 	std::cout << "  | ";
 	for (int i = 0; i < _ctx.width(); ++i) {
 		std::cout << i % 10 << ' ';
 	}
 	std::cout << "|\n";
-	std::cout << std::string(_ctx.width() * 2 + 5, '-') << '\n';
+	draw_separator_line();
 }
 
 auto UI::draw_footer() -> void {
-	std::cout << std::string(_ctx.width() * 2 + 5, '-') << '\n';
+	draw_separator_line();
 	std::cout << "  | ";
 	for (int i = 0; i < _ctx.width(); ++i) {
 		std::cout << i % 10 << ' ';

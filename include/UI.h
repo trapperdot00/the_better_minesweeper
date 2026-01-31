@@ -14,6 +14,7 @@ public:
 	void draw();
 private:
 	auto draw_info() -> void;
+	auto draw_separator_line() -> void;
 	auto draw_header() -> void;
 	auto draw_footer() -> void;
 	auto draw_rows() -> void;
