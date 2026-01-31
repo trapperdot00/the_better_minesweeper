@@ -20,7 +20,7 @@ auto GameContext::size() const -> int {
 
 auto GameContext::mine_count() const -> int {
 	int result = 0;
-	for_each([&result, this](auto tile) {
+	for_each([&result](auto tile) {
 		if (tile->is_mine()) {
 			++result;
 		}
@@ -30,7 +30,7 @@ auto GameContext::mine_count() const -> int {
 
 auto GameContext::clicked_count() const -> int {
 	int result = 0;
-	for_each([&result, this](auto tile) {
+	for_each([&result](auto tile) {
 		if (tile->clicked()) {
 			++result;
 		}
@@ -40,7 +40,7 @@ auto GameContext::clicked_count() const -> int {
 
 auto GameContext::flagged_count() const -> int {
 	int result = 0;
-	for_each([&result, this](auto tile) {
+	for_each([&result](auto tile) {
 		if (tile->flagged()) {
 			++result;
 		}

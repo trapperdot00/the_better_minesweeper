@@ -34,7 +34,7 @@ auto EmptyTile::neighbor_count() const -> int {
 
 auto EmptyTile::mine_neighbor_count() const -> int {
 	int result = 0;
-	_data.for_each_neighbor(pos(), [this, &result](auto neighbor) {
+	_data.for_each_neighbor(pos(), [&result](auto neighbor) {
 		if (neighbor->is_mine()) {
 			++result;
 		}
@@ -44,7 +44,7 @@ auto EmptyTile::mine_neighbor_count() const -> int {
 
 auto EmptyTile::clicked_neighbor_count() const -> int {
 	int result = 0;
-	_data.for_each_neighbor(pos(), [this, &result](auto neighbor) {
+	_data.for_each_neighbor(pos(), [&result](auto neighbor) {
 		if (neighbor->clicked()) {
 			++result;
 		}
@@ -54,7 +54,7 @@ auto EmptyTile::clicked_neighbor_count() const -> int {
 
 auto EmptyTile::flagged_neighbor_count() const -> int {
 	int result = 0;
-	_data.for_each_neighbor(pos(), [this, &result](auto neighbor) {
+	_data.for_each_neighbor(pos(), [&result](auto neighbor) {
 		if (neighbor->flagged()) {
 			++result;
 		}
