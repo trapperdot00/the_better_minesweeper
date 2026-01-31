@@ -4,6 +4,7 @@
 #include "Cursor.h"
 #include "Tile.h"
 
+#include <cstddef>
 #include <iostream>
 
 auto UI::draw() -> void {
@@ -22,7 +23,7 @@ auto UI::draw_info() -> void {
 }
 
 auto UI::draw_separator_line() -> void {
-	std::cout << std::string(_ctx.width() * 2 + 5, '-') << '\n';
+	std::cout << std::string(static_cast<size_t>(_ctx.width() * 2 + 5), '-') << '\n';
 }
 
 auto UI::draw_header() -> void {

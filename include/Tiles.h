@@ -2,6 +2,7 @@
 #define TILES_H
 
 #include "FwdDecls.h"
+#include <cstddef>
 #include <vector>
 #include <memory>
 #include <functional>
@@ -23,7 +24,7 @@ public:
 
 	auto in_range(Point p) const -> bool;
 private:
-	auto to_index(Point p) const -> int;
+	auto to_index(Point p) const -> size_t;
 	auto clamp_x(int x) const -> int;
 	auto clamp_y(int y) const -> int;
 	auto neighbor_min_x(Point p) const -> int;

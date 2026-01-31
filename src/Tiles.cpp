@@ -3,14 +3,19 @@
 #include "Tile.h"
 #include "Point.h"
 
+#include <cstddef>
 #include <stdexcept>
 #include <algorithm>
 
 Tiles::Tiles(int width, int height) :
 	_width{width},
 	_height{height},
-	_data(width * height)
-{}
+	_data(static_cast<size_t>(width * height))
+{
+	if (_width < 0 || height < 0) {
+		throw std::invalid_argument{"size cannot be negative"};
+	}
+}
 
 auto Tiles::get_tile(Point p) const -> std::shared_ptr<Tile> {
 	if (!in_range(p)) {
@@ -51,8 +56,8 @@ auto Tiles::in_range(Point p) const -> bool {
 		&& (p.y >= 0 && p.y < _height);
 }
 
-auto Tiles::to_index(Point p) const -> int {
-	return p.y * _width + p.x;
+auto Tiles::to_index(Point p) const -> size_t {
+	return static_cast<size_t>(p.y * _width + p.x);
 }
 
 auto Tiles::clamp_x(int x) const -> int {
