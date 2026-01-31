@@ -6,6 +6,7 @@
 #include "GameContext.h"
 #include "Difficulty.h"
 #include "TilePlacer.h"
+#include "UI.h"
 
 class Game {
 public:
@@ -13,20 +14,13 @@ public:
 
 	auto play() -> void;
 private:
-	auto print() const -> void;
-
+	auto print() -> void;
 	auto game_ended() const -> bool;
-
-	auto print_info() const -> void;
-	auto print_header() const -> void;
-	auto print_footer() const -> void;
-	auto print_rows() const -> void;
-	auto print_row(int y) const -> void;
-	auto print_tile(Point p) const -> void;
 private:
 	GameContext _ctx;
 	Cursor _cur;
 	TilePlacer _placer;
+	UI _ui;
 };
 
 #endif
