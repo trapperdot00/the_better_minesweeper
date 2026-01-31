@@ -16,6 +16,7 @@ class Cursor;
 enum class GameState;
 class GameContext;
 class UI;
+class Timer;
 class Game;
 
 #endif
