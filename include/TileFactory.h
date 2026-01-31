@@ -7,7 +7,7 @@
 
 class TileFactory {
 public:
-	TileFactory(GameContext& data);
+	explicit TileFactory(GameContext& data);
 
 	auto create_empty(Point p) const -> std::shared_ptr<Tile>;
 	auto create_mine(Point p) const -> std::shared_ptr<Tile>;

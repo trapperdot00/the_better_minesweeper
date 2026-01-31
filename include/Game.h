@@ -10,7 +10,7 @@
 
 class Game {
 public:
-	Game(Difficulty diff);
+	explicit Game(Difficulty diff);
 
 	auto play() -> void;
 private:

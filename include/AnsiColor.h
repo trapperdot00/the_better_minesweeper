@@ -21,7 +21,7 @@ public:
 	static const AnsiColor cyan;
 	static const AnsiColor white;
 private:
-	AnsiColor(const std::string& begin) :
+	explicit AnsiColor(const std::string& begin) :
 		_begin{begin}
 	{}
 private:
