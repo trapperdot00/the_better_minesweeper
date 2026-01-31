@@ -25,18 +25,20 @@ auto Timer::reset() -> void {
 }
 
 auto Timer::elapsed() const -> nanoseconds {
-	if (_state != State::stopped) {
-		throw std::logic_error{"timer is not stopped"};
+	switch (_state) {
+	case State::stopped:
+		return _end - _start;
+	case State::started:
+		return steady_clock::now() - _start;
+	default:
+		throw std::logic_error{"timer has not been started"};
 	}
-	return _end - _start;
 }
 
 auto Timer::rep() const -> std::string {
-	if (_state != State::stopped) {
-		throw std::logic_error{"timer not stopped"};
-	}
-	auto elapsed_min = duration_cast<minutes>(elapsed()).count();
-	auto elapsed_sec = duration_cast<seconds>(elapsed() % minutes{1}).count();
-	auto elapsed_msec = duration_cast<milliseconds>(elapsed() % seconds{1}).count();
+	const auto elapsed_time = elapsed();
+	auto elapsed_min = duration_cast<minutes>(elapsed_time).count();
+	auto elapsed_sec = duration_cast<seconds>(elapsed_time % minutes{1}).count();
+	auto elapsed_msec = duration_cast<milliseconds>(elapsed_time % seconds{1}).count();
 	return std::format("{:0>2}:{:0>2}.{:0>3}", elapsed_min, elapsed_sec, elapsed_msec);
 }
