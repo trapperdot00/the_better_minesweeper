@@ -23,9 +23,6 @@ private:
 	auto print_rows() const -> void;
 	auto print_row(int y) const -> void;
 	auto print_tile(Point p) const -> void;
-
-	auto place_mines(int mine_count) -> void;
-	auto place_empties() -> void;
 private:
 	GameContext _ctx;
 	Cursor _cur;
