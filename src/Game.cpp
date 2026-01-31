@@ -8,6 +8,7 @@
 #include <random>
 #include <iostream>
 #include <chrono>
+#include <thread>
 
 Game::Game(Difficulty diff) :
 	_ctx{diff.width, diff.height},
@@ -21,36 +22,75 @@ Game::Game(Difficulty diff) :
 
 auto Game::play() -> void {
 	_timer.start();
-	_ui.draw();
-	for (char op; !game_ended() && (std::cin >> op); ) {
+	start_game_threads();
+	_timer.stop();
+}
+
+auto Game::start_game_threads() -> void {
+	std::atomic<bool> should_exit{false};
+	std::jthread ui_thread{[this, &should_exit] { ui_loop(should_exit); }};
+	std::jthread cmd_thread{[this, &should_exit] { cmd_loop(should_exit); }};
+}
+
+auto Game::ui_loop(std::atomic<bool>& should_exit) -> void {
+	while (!should_exit.load(std::memory_order_relaxed) && !game_ended()) {
+		draw_ui();
+		std::this_thread::sleep_for(std::chrono::milliseconds{15});
+	}
+	draw_ui();
+}
+
+auto Game::cmd_loop(std::atomic<bool>& should_exit) -> void {
+	char op;
+	while (!should_exit.load() && !game_ended() && (std::cin >> op)) {
 		switch (op) {
 		case 'w':
-			_cur.move(Point{0, -1});
+			move_cursor(Point{0, -1});
 			break;
 		case 's':
-			_cur.move(Point{0, 1});
+			move_cursor(Point{0, 1});
 			break;
 		case 'a':
-			_cur.move(Point{-1, 0});
+			move_cursor(Point{-1, 0});
 			break;
 		case 'd':
-			_cur.move(Point{1, 0});
+			move_cursor(Point{1, 0});
 			break;
 		case 'c':
-			_cur.click();
+			click();
 			break;
 		case 'f':
-			_cur.flag();
+			flag();
 			break;
 		}
-		_ui.draw();
 	}
-	_timer.end();
-	std::cout << "Time: " << _timer.rep() << '\n';
+	if (!std::cin) {
+		should_exit.store(true, std::memory_order_relaxed);
+	}
+}
+
+auto Game::draw_ui() -> void {
+	std::lock_guard lock{_m};
+	_ui.draw();
 }
 
 auto Game::game_ended() const -> bool {
+	std::lock_guard lock{_m};
 	return _ctx.remaining_mines() == _ctx.remaining_tiles()
 		|| _ctx.state() != GameState::running;
 }
 
+auto Game::move_cursor(Point p) -> void {
+	std::lock_guard lock{_m};
+	_cur.move(p);
+}
+
+auto Game::click() -> void {
+	std::lock_guard lock{_m};
+	_cur.click();
+}
+
+auto Game::flag() -> void {
+	std::lock_guard lock{_m};
+	_cur.flag();
+}

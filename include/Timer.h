@@ -7,7 +7,7 @@
 class Timer {
 public:
 	auto start() -> void;
-	auto end() -> void;
+	auto stop() -> void;
 	auto reset() -> void;
 
 	auto elapsed() const -> std::chrono::nanoseconds;

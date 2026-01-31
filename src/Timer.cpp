@@ -12,7 +12,7 @@ auto Timer::start() -> void {
 	_state = State::started;
 }
 
-auto Timer::end() -> void {
+auto Timer::stop() -> void {
 	if (_state != State::started) {
 		throw std::logic_error{"timer is not started"};
 	}
