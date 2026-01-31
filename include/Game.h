@@ -7,6 +7,7 @@
 #include "Difficulty.h"
 #include "TilePlacer.h"
 #include "UI.h"
+#include "Timer.h"
 
 class Game {
 public:
@@ -20,6 +21,7 @@ private:
 	Cursor _cur;
 	TilePlacer _placer;
 	UI _ui;
+	Timer _timer;
 };
 
 #endif

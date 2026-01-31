@@ -20,7 +20,7 @@ Game::Game(Difficulty diff) :
 }
 
 auto Game::play() -> void {
-	auto start_time = std::chrono::steady_clock::now();
+	_timer.start();
 	_ui.draw();
 	for (char op; !game_ended() && (std::cin >> op); ) {
 		switch (op) {
@@ -45,16 +45,8 @@ auto Game::play() -> void {
 		}
 		_ui.draw();
 	}
-	auto end_time = std::chrono::steady_clock::now();
-	auto elapsed = end_time - start_time;
-	auto time_min = std::chrono::duration_cast<std::chrono::minutes>(elapsed);
-	auto time_sec = std::chrono::duration_cast<std::chrono::seconds>(
-		elapsed % std::chrono::minutes{1}
-	);
-	auto time_msec = std::chrono::duration_cast<std::chrono::milliseconds>(
-		elapsed % std::chrono::seconds{1}
-	);
-	std::cout << "Time: " << time_min << ' ' << time_sec << ' ' << time_msec << '\n';
+	_timer.end();
+	std::cout << "Time: " << _timer.rep() << '\n';
 }
 
 auto Game::game_ended() const -> bool {
