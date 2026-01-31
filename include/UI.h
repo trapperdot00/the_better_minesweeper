@@ -6,9 +6,10 @@
 
 class UI {
 public:
-	UI(const GameContext& ctx, const Cursor& cursor) :
+	UI(const GameContext& ctx, const Cursor& cursor, const Timer& timer) :
 		_ctx{ctx},
-		_cursor{cursor}
+		_cursor{cursor},
+		_timer{timer}
 	{}
 
 	void draw();
@@ -23,6 +24,7 @@ private:
 private:
 	const GameContext& _ctx;
 	const Cursor& _cursor;
+	const Timer& _timer;
 };
 
 #endif

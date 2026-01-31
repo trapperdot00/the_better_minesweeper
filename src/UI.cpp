@@ -2,6 +2,7 @@
 
 #include "GameContext.h"
 #include "Cursor.h"
+#include "Timer.h"
 #include "Tile.h"
 
 #include <cstddef>
@@ -16,6 +17,7 @@ auto UI::draw() -> void {
 
 auto UI::draw_info() -> void {
 	std::cout
+		<< "time:    " << _timer.rep() << '\n'
 		<< "clicked: " << _ctx.clicked_count() << '\n'
 		<< "flagged: " << _ctx.flagged_count() << '\n'
 		<< "remaining tiles: " << _ctx.remaining_tiles() << '\n'

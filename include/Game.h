@@ -20,8 +20,8 @@ private:
 	GameContext _ctx;
 	Cursor _cur;
 	TilePlacer _placer;
-	UI _ui;
 	Timer _timer;
+	UI _ui;
 };
 
 #endif

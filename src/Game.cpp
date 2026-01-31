@@ -13,7 +13,7 @@ Game::Game(Difficulty diff) :
 	_ctx{diff.width, diff.height},
 	_cur{_ctx, Point{diff.width, diff.height}},
 	_placer{_ctx, diff},
-	_ui{_ctx, _cur}
+	_ui{_ctx, _cur, _timer}
 {
 	_placer.place_tiles();
 	_ctx.set_state(GameState::running);
