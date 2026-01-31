@@ -14,7 +14,6 @@ public:
 
 	auto play() -> void;
 private:
-	auto print() -> void;
 	auto game_ended() const -> bool;
 private:
 	GameContext _ctx;

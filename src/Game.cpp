@@ -19,7 +19,7 @@ Game::Game(Difficulty diff) :
 }
 
 auto Game::play() -> void {
-	print();
+	_ui.draw();
 	for (char op; !game_ended() && (std::cin >> op); ) {
 		switch (op) {
 		case 'w':
@@ -41,12 +41,8 @@ auto Game::play() -> void {
 			_cur.flag();
 			break;
 		}
-		print();
+		_ui.draw();
 	}
-}
-
-auto Game::print() -> void {
-	_ui.draw();
 }
 
 auto Game::game_ended() const -> bool {
