@@ -34,8 +34,6 @@ private:
 	auto neighbor_max_x() const -> int;
 	auto neighbor_min_y() const -> int;
 	auto neighbor_max_y() const -> int;
-
-	void for_each_neighbor(std::function<void(Point)> func) const;
 private:
 	AnsiColor _neighbor_color;
 };
